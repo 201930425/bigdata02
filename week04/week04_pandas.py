@@ -4,11 +4,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-def square(x):
-    return x ** 2
-def cube(x):
-    return x ** 3
-
 mpg = sns.load_dataset('mpg')
 df = pd.DataFrame([
     [1,4,7],
@@ -17,5 +12,5 @@ df = pd.DataFrame([
     columns=('A','B','C'),
     index=[1,2,3])
 print(df)
-print(df.apply(square))
-print(df.apply(cube))
+print(df.apply(lambda x : x*x))
+print(df.apply(lambda z : z**3))
