@@ -3,6 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-german = pd.read_csv('german.csv')
-ages = [10,20,30,40,50,60,70,80]
-print(pd.cut(german['Age'],bins=ages,right=False).reset_index().groupby('Age').count())
+korean = pd.read_csv('korean.csv')
+print(korean['Age'].value_counts().sort_values(ascending=False))
+print(pd.qcut(korean['Age'],q=8).reset_index().groupby('Age').size())
