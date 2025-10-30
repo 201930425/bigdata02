@@ -4,9 +4,5 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 german = pd.read_csv('german.csv')
-# print(german.info())
-# print(german.tail())
-# print((german.describe()))
-# print(german['Age'].describe())
-# print(pd.cut(german['Age'],bins=8))
-print(pd.cut(german['Age'],bins=8).reset_index().groupby('Age').count())
+ages = [10,20,30,40,50,60,70,80]
+print(pd.cut(german['Age'],bins=ages,right=False).reset_index().groupby('Age').count())
