@@ -4,11 +4,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 wh = pd.read_csv('wh.csv')
-# print(wh.head())
-# print(wh.describe())
-# print(wh.info())
-# 파운드 ( 1 == 453.592g), 인치 (1 == 2.54cm
-# print(wh.query('Weight > 350'))
-print(wh[wh['Weight']>=390])
-# sns.scatterplot(x='Weight', y='Height', data=wh)
-# plt.show()
+
+# new_wh = wh.query('Weight < 390')
+# print(new_wh)
+# print(new_wh.describe())
+
+criteria = wh['Weight'].quantile(0.9999)
+print(criteria) # 약 255.9 파운드
+print(round(criteria,1)) # 255.9
+
+new_wh = wh[wh['Weight'] < criteria]
+print(new_wh.info())
