@@ -4,6 +4,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import scipy.stats as stats
 
-s = pd.Series([1,np.nan,3,np.nan,5,6,np.nan,np.nan,9])
-#내삽(보간)
-print(s.interpolate(method='spline',order=1,limit=1,limit_direction='both'))
+usc = pd.read_csv('us_corona19.csv')
+# print(usc.info())
+# print(usc.describe())
+print(usc[usc['Admin2'].isna()])
+
+# print(usc.dropna())
+
+# new_usc = usc.fillna('Daelim')
+# print(new_usc.query('Admin2 == "Daelim"'))
