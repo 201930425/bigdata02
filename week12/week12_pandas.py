@@ -16,6 +16,11 @@ criteria = wh['Weight'].quantile(0.9999)
 new_wh = wh[wh['Weight'] < criteria]
 # print(new_wh.info())
 # print(new_wh.describe())
-sns.scatterplot(x='Weight', y='Height', data=new_wh)
-plt.show()
+# sns.scatterplot(x='Weight', y='Height', data=new_wh)
+# plt.show()
 # print(wh[wh['Weight'] > criteria].index)
+wh['Weight'] =new_wh['Weight'].clip(100,200) # lower bound, upper bound
+print(wh.tail())
+# print(wh.info())
+sns.scatterplot(x='Weight', y='Height', data=wh)
+plt.show()
