@@ -19,22 +19,43 @@ yearly_stats = apple.groupby('Year')['Close'].agg([
     ('평균','mean'),
     ('개수','count')
 ])
-# print(yearly_stats.tail(9))
-
 apple['Month'] = apple['Date'].dt.month
 monthly_stats = apple.groupby('Month')['Close'].mean()
-# print(monthly_stats)
-
 #분기별 수익률 분석
 apple['Quarter'] = apple['Date'].dt.quarter
 quarterly_return = apple.groupby(['Year','Quarter'])['Daily_Return'].sum()
-# print(quarterly_return)
-
 # 거래량이 많은 날 분석
-# print(apple['Volume'])
 apple['Volume_Category'] = pd.cut(apple['Volume'],
                                   bins = [0,100_000_000,300_000_000,5e8,10e10],
                                   labels = ['Low', 'Medium', 'High', 'Very High']
                                   )
 volume_analysis = apple.groupby('Volume_Category')['Close'].agg(['count','mean'])
-print(volume_analysis)
+# 최근 2년 데이터
+recent_2year = apple[apple['Date'] >= '2020-06-17']
+# 가격 100달러 이상
+high_price_days = apple[apple['Close'] >= 100]
+# 수익률이 양수인 날
+positive_return = apple[apple['Daily_Return'] > 0]
+# print(len(positive_return)/len(apple)*100)
+# 거래량이 상위 5%에 해당하는 날
+high_volume_threshold = apple['Volume'].quantile(0.95)
+# print(high_volume_threshold)
+high_volume_days = apple[apple['Volume'] > high_volume_threshold]
+print(high_volume_days)
+
+apple_filtered = apple[(apple['Date'] >= '2020-01-01') &
+                        (apple['Close'] > 50) &
+                        (apple['Volume'] > 2e8)]
+# print(apple_filtered)
+
+plt.style.use('seaborn-v0_8-darkgrid')
+fig, ax = plt.subplots(figsize=(14,6))
+
+ax.plot(apple['Date'], apple['Close']
+        ,linewidth=2,label='Close price', color='red')
+
+ax.plot(apple['Date'], apple['MA_20']
+        ,linewidth=2,label='20-day MA'
+        ,linestyle='--',alpha=0.7)
+
+plt.show()
